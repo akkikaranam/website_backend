@@ -1,0 +1,139 @@
+const express = require("express");
+const cors = require("cors");
+const multer = require("multer");
+const app = express();
+app.use(express.static("public"));
+app.use(express.json());
+app.use(cors());
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./public/images/");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+  
+const upload = multer({ storage: storage });
+
+app.get("/api/swiftmesh", (req, res) => {
+  res.send("Hello, World!");
+});
+
+app.listen(3001, () => {
+  console.log("Server is running on port 3001");
+});
+
+[
+   {
+    "_id": 1,
+    "title": "Turning AI Strategy Into Business Value",
+    "img_name": "images/holoscreens.jpg",
+    "category": "AI Solutions",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Oct 05, 2026",
+    "read_time": "8 min read",
+    "description": "How practical AI strategy helps organizations turn emerging technology into measurable results.",
+    "article_url": "#"
+  },
+  {
+    "_id": 2,
+    "title": "Building Resilient LLM Workflows",
+    "img_name": "images/insights2.jpg",
+    "category": "AI Solutions",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Sep 28, 2026",
+    "read_time": "6 min read",
+    "description": "Practical guidance for designing reliable large-language-model workflows for real business use.",
+    "article_url": "llm-workflows.html"
+  },
+  {
+    "_id": 3,
+    "title": "Scaling Kubernetes Past 10,000 Nodes",
+    "img_name": "images/insights3.jpg",
+    "category": "Cloud Native",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Sep 22, 2026",
+    "read_time": "9 min read",
+    "description": "Strategies for operating large-scale cloud infrastructure with confidence.",
+    "article_url": "#"
+  },
+  {
+    "_id": 4,
+    "title": "Zero Trust Architecture Paradigms",
+    "img_name": "images/insights4.jpg",
+    "category": "Cybersecurity",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Sep 15, 2026",
+    "read_time": "7 min read",
+    "description": "An overview of modern security approaches built around continuous verification.",
+    "article_url": "#"
+  },
+  {
+    "_id": 5,
+    "title": "Why We Swapped to Monorepos",
+    "img_name": "images/insights5.jpg",
+    "category": "Engineering",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Sep 08, 2026",
+    "read_time": "5 min read",
+    "description": "Why development teams may choose a monorepo structure to improve collaboration.",
+    "article_url": "#"
+  },
+  {
+    "_id": 6,
+    "title": "The Pitfalls of Agentic RAG Systems",
+    "img_name": "images/insights6.jpg",
+    "category": "AI Solutions",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Aug 29, 2026",
+    "read_time": "11 min read",
+    "description": "Common challenges to consider when developing agentic retrieval-augmented generation systems.",
+    "article_url": "#"
+  },
+  {
+    "_id": 7,
+    "title": "Optimizing Serverless Cold Starts",
+    "img_name": "images/insights7.jpg",
+    "category": "Cloud Native",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Aug 14, 2026",
+    "read_time": "4 min read",
+    "description": "Practical ways to reduce delays when serverless applications first start.",
+    "article_url": "#"
+  },
+  {
+    "_id": 8,
+    "title": "Building Cyber Resilience Before It's Needed",
+    "img_name": "images/cube.jpg",
+    "category": "Cybersecurity",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Oct 2026",
+    "read_time": "6 min read",
+    "description": "How organizations can prepare their security strategy before a cyber incident occurs.",
+    "article_url": "#"
+  },
+  {
+    "_id": 9,
+    "title": "Why Great Tech Teams Are Built Differently",
+    "img_name": "images/table.jpg",
+    "category": "Talent Strategy",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Jul 30, 2026",
+    "read_time": "7 min read",
+    "description": "The people, processes, and technical foundations that help high-performing teams succeed.",
+    "article_url": "#"
+},
+{
+    "_id": 10,
+    "title": "Building Digital Products With Confidence",
+    "img_name": "images/team.jpg",
+    "category": "Digital Delivery",
+    "author": "SwiftMesh Editorial Team",
+    "date": "Jul 18, 2026",
+    "read_time": "6 min read",
+    "description": "How focused teams bring digital products from an initial idea to successful delivery.",
+    "article_url": "#"
+}
+]
