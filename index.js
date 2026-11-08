@@ -1,32 +1,28 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+const path = require("path");
+
 const app = express();
-app.use(express.static("public"));
+
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(cors());
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./public/images/");
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.originalname);
-    },
-  });
-  
+  destination: (req, file, cb) => {
+    cb(null, "./public/images/");
+  },
+
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
 const upload = multer({ storage: storage });
 
-app.get("/api/swiftmesh", (req, res) => {
-  res.send("Hello, World!");
-});
-
-app.listen(3001, () => {
-  console.log("Server is running on port 3001");
-});
-
-[
-   {
+const insights = [
+  {
     "_id": 1,
     "title": "Turning AI Strategy Into Business Value",
     "img_name": "images/holoscreens.jpg",
@@ -124,8 +120,8 @@ app.listen(3001, () => {
     "read_time": "7 min read",
     "description": "The people, processes, and technical foundations that help high-performing teams succeed.",
     "article_url": "#"
-},
-{
+  },
+  {
     "_id": 10,
     "title": "Building Digital Products With Confidence",
     "img_name": "images/team.jpg",
@@ -135,5 +131,15 @@ app.listen(3001, () => {
     "read_time": "6 min read",
     "description": "How focused teams bring digital products from an initial idea to successful delivery.",
     "article_url": "#"
-}
-]
+  }
+];
+
+app.get("/api/swiftmesh", (req, res) => {
+  res.json(insights);
+});
+
+const port = process.env.PORT || 3001;
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
