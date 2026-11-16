@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
+const Joi = require("joi");
 
 const app = express();
 
@@ -135,11 +136,61 @@ const insights = [
 ];
 
 app.get("/api/swiftmesh", (req, res) => {
-  res.json(insights);
+  res.send(insights);
 });
+
+app.post("/api/swiftmesh", (req, res) => {
+  const result = validateInsight(req.body);
+
+  if (result.error) {
+    res.status(400).send({
+      message: result.error.details[0].message,
+    });
+    return;
+  }
+
+  const insight = {
+    _id: insights.length + 1,
+    title: result.value.title,
+    author: result.value.author,
+    category: result.value.category,
+    description: result.value.description,
+    img_name: "images/holoscreens.jpg",
+    date: new Date().toLocaleDateString(),
+    read_time: "3 min read",
+    article_url: "#",
+  };
+
+  insights.push(insight);
+
+  res.status(201).send(insight);
+});
+
+const validateInsight = (insight) => {
+  const schema = Joi.object({
+    title: Joi.string().trim().min(5).max(120).required(),
+
+    author: Joi.string().trim().min(2).max(80).required(),
+
+    category: Joi.string()
+      .valid(
+        "AI Solutions",
+        "Cloud Native",
+        "Cybersecurity",
+        "Engineering",
+        "Talent Strategy",
+        "Digital Delivery"
+      )
+      .required(),
+
+    description: Joi.string().trim().min(20).max(2000).required(),
+  });
+
+  return schema.validate(insight);
+};
 
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log("Server is running");
 });
